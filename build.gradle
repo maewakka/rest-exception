@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'maven-publish'
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+}
+
+group = 'com.woo'
+version = '0.0.2'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+jar {
+    enabled = true
+}
+
+
+publishing {
+    def user = username
+    def passwd = password
+    def nexusUrl = nexus_url
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'rest-exception'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'Rest Exception'
+                description = 'Rest Exception Library For Woo'
+                developers {
+                    developer {
+                        id = 'woo'
+                        name = 'Mr.woo'
+                        email = 'chlguddn7@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = user
+                password = passwd
+            }
+            url = nexusUrl
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
