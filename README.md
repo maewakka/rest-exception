@@ -69,6 +69,6 @@ public void login(String id, String password) {
 
 BizException 안에 전달할 key 값은 exception.yml 에서 작성한 key를 선택하여 넣으시면 됩니다.
 
-<img width="1069" alt="image" src="https://github.com/user-attachments/assets/4c7d8174-4abf-4b4f-8b9e-244e0b0ad57f">
+<img width="1372" alt="image" src="https://github.com/user-attachments/assets/4e5ed699-7b6e-496c-94e0-fab458bf35b2">
 
 응답은 위와 같은 형태로 받게 됩니다.
