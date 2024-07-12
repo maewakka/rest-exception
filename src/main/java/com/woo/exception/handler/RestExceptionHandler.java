@@ -83,6 +83,7 @@ public class RestExceptionHandler implements HandlerExceptionResolver {
         log.error(ex.getClass().getSimpleName() + " : " + errorInfo.getMessage());
         ex.printStackTrace();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(errorInfo.getStatus());
         response.setCharacterEncoding("UTF-8");
         try {
             response.getWriter().write(objectMapper.writeValueAsString(errorInfo));
